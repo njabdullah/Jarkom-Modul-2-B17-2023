@@ -618,34 +618,57 @@ Lalu untuk mengetes apakah berhasil lakukan `lynx 10.17.3.3` dan memiliki tampil
 ## Nomor 20
 ###### Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
 
-
 #### Penyelesaian
-Lakukan konfigurasi `.htaccess` pada directory `/var/www/parikesit.abimanyu.b17` dengan menambahkan 
-```
-RewriteRule ^.abimanyu.\.(jpg|jpeg|png|gif)$ /abimanyu.png [L,R=301]
-```
-sehingga menjadi 
+*Di Node Abimanyu*
 
-![soal20.1](images/20.1.png)
+	a2enmod rewrite
 
-#### Konfigurasi
-	<VirtualHost *:80>
-	   DocumentRoot /var/www/parikesit.abimanyu.b17
-	   ServerName parikesit.abimanyu.b17.com
-	   ServerAlias www.parikesit.abimanyu.b17.com
+	echo 'RewriteEngine On
+	RewriteCond %{REQUEST_URI} ^/public/images/(.*)(abimanyu)(.*\.(png|jpg))
+	RewriteCond %{REQUEST_URI} !/public/images/abimanyu.png
+	RewriteRule abimanyu http://parikesit.abimanyu.b17.com/public/images/abimanyu.png$1 [L,R=301]' > /var/www/parikesit.abimanyu.b17/.htaccess
+
+Lalu jalankan konfigurasi berikut
+
+	echo -e '<VirtualHost *:80>
+	  ServerAdmin webmaster@localhost
+	  DocumentRoot /var/www/parikesit.abimanyu.b17
 	
-	        <Directory /var/www/parikesit.abimanyu.b17/public>
-	                Options +Indexes
-	         </Directory>
-	         <Directory /var/www/parikesit.abimanyu.b17/secret>
-	                Require all denied
-	         </Directory>
+	  ServerName parikesit.abimanyu.b17.com
+	  ServerAlias www.parikesit.abimanyu.b17.com
 	
-	    Alias "/js" "/var/www/parikesit.abimanyu.b17/public/js"
-	    ErrorDocument 404 /error/404.html
-	    ErrorDocument 403 /error/403.html
+	  <Directory /var/www/parikesit.abimanyu.b17/public>
+	          Options +Indexes
+	  </Directory>
 	
-	        RewriteEngine On
-	        RewriteCond %{REQUEST_URI} abimanyu
-	        RewriteRule ^.abimanyu.\.(jpg|jpeg|png|gif)$ /public/images/abimanyu.$
-	</VirtualHost>
+	  <Directory /var/www/parikesit.abimanyu.b17/secret>
+	          Options -Indexes
+	  </Directory>
+	
+	  <Directory /var/www/parikesit.abimanyu.b17>
+	          Options +FollowSymLinks -Multiviews
+	          AllowOverride All
+	  </Directory>
+	
+	  Alias "/public" "/var/www/parikesit.abimanyu.b17/public"
+	  Alias "/secret" "/var/www/parikesit.abimanyu.b17/secret"
+	  Alias "/js" "/var/www/parikesit.abimanyu.b17/public/js"
+	
+	  ErrorDocument 404 /error/404.html
+	  ErrorDocument 403 /error/403.html
+	
+	  ErrorLog ${APACHE_LOG_DIR}/error.log
+	  CustomLog ${APACHE_LOG_DIR}/access.log combined
+	</VirtualHost>' > /etc/apache2/sites-available/parikesit.abimanyu.b17.com.conf
+
+	service apache2 restart
+
+Lakukan test di Node Client Nakula
+
+	lynx parikesit.abimanyu.b17.com/public/images/not-abimanyu.png
+	lynx parikesit.abimanyu.b17.com/public/images/abimanyu-student.jpg
+	lynx parikesit.abimanyu.b17.com/public/images/abimanyu.png
+	lynx parikesit.abimanyu.b17.com/public/images/notabimanyujustmuseum.177013
+
+ ![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban20.1.png)
+ ![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban20.2.png)
