@@ -67,6 +67,8 @@ Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan ali
     ping www.arjuna.b17.com
 
 #### Jawaban
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban2.png)
+
 ---
 ## Soal 3
 Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
@@ -97,6 +99,9 @@ Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses k
     ping www.abimanyu.b17.com
 
 #### Jawaban
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban3.png)
+
+---
 
 ## Soal 4
 Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain parikesit.abimanyu.yyy.com yang diatur DNS-nya di Yudhistira dan mengarah ke Abimanyu.
@@ -115,6 +120,9 @@ Kemudian, karena terdapat beberapa web yang harus di-deploy, buatlah subdomain p
     ping parikesit.abimanyu.b17.com
 
 #### Jawaban
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban4.png)
+
+---
 
 ## Soal 5
 Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
@@ -148,6 +156,9 @@ Buat juga reverse domain untuk domain utama. (Abimanyu saja yang direverse)
     host -t PTR 10.17.3.3 (punya abimanyu)
 
 #### Jawaban
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban5.png)
+
+---
 
 ## Soal 6
 Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga Werkudara sebagai DNS Slave untuk domain utama.
@@ -197,6 +208,9 @@ Agar dapat tetap dihubungi ketika DNS Server Yudhistira bermasalah, buat juga We
     ping www.abimanyu.b17.com
 
 #### Jawaban
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban6.png)
+
+---
 
 ## Soal 7
 Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
@@ -253,6 +267,9 @@ Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatl
     ping www.baratayuda.abimanyu.b17.com
 
 #### Jawaban
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban7.png)
+
+---
 
 ## Soal 8
 Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
@@ -273,6 +290,9 @@ Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdom
     ping www.rjp.baratayuda.abimanyu.b17.com
 
 #### Jawaban
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban8.png)
+
+---
 
 ## Soal 9
 Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
@@ -384,7 +404,7 @@ Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggun
 
     nginx -t
 
-#### Jawaban
+---
 
 ## Soal 10
 Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan server_name pada soal nomor 1. Untuk melakukan pengecekan akses alamat web tersebut kemudian pastikan worker yang digunakan untuk menangani permintaan akan berganti ganti secara acak. Untuk webserver di masing-masing worker wajib berjalan di port 8001-8003. Contoh
@@ -434,6 +454,11 @@ Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan 
     lynx http://arjuna.b17.com
 
 #### Jawaban
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban10.1.png)
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban10.2.png)
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban10.3.png)
+
+---
 
 ## Nomor 11
 ###### Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
