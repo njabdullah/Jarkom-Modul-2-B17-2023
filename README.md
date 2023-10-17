@@ -8,6 +8,25 @@ Nama Anggota
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut
 
 #### Konfigurasi
+*Di Router*
+
+	auto eth0
+	iface eth0 inet dhcp
+	
+	auto eth1
+	iface eth1 inet static
+		address 10.17.1.1
+		netmask 255.255.255.0
+	
+	auto eth2
+	iface eth2 inet static
+		address 10.17.2.1
+		netmask 255.255.255.0
+	
+	auto eth3
+	iface eth3 inet static
+		address 10.17.3.1
+		netmask 255.255.255.0
 
 #### Jawaban
 
@@ -198,7 +217,7 @@ Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatl
 
 *Di Node Werkudara*
 
-	  nano /etc/bind/named.conf.options
+	nano /etc/bind/named.conf.options
  
     comment //dnsec
     allow-query{any;};
