@@ -435,94 +435,172 @@ Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan 
 
 #### Jawaban
 
-## Soal 11
-Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
+## Nomor 11
+###### Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
 
-#### Konfigurasi
-*Di Node Abimanyu*
+#### Penyelesaian
+Melakukan instalasi apache2 dan melakukan konfigurasi dalam file `/etc/apache2/sites-available/abimanyu.b17.com.conf`
+```
+apt-get update
+apt-get install apache2
+cp 000-default.conf abimanyu.b17.com.conf
+```
+menjadi seperti ini
+![soal11.1](images/11.1.png)
+Lalu pada directory `/var/www` buat directory untuk file webserver yaitu abimanyu.b17
+```
+mkdir /var/www/abimanyu.b17
+```
+Lalu untuk mengetes apakah berhasil lakukan `lynx abimanyu.b17.com` dari client dan memiliki tampilan sebagai berikut
+![soal11.2](images/11.2.png)
 
-	apt-get install apache2 -y
-	service apache2 start
 
-	cp /etc/apache2/sites-available/000-default.conf  /etc/apache2/sites-available/abimanyu.b17.com.conf
+## Nomor 12
+###### Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
 
-	nano /etc/apache2/sites-available/abimanyu.b17.com.conf
+#### Penyelesaian
+Lakukan konfigurasi dalam file `/etc/apache2/sites-available/abimanyu.b17.com.conf` dengan menambahkan
+```
+Alias "/home" "/var/www/abimanyu.b17/index.php/home"
+```
+menjadi 
+![soal12.1](images/12.1.png)
+Lalu untuk mengetes apakah berhasil lakukan `lynx abimanyu.b17.com/home` dari client dan memiliki tampilan sebagai berikut
+![soal12.2](images/12.2.png)
 
-	((Ubah ke))
-	/var/www/abimanyu.b17
-	
-	((Dibawahnya tambahkan))
-	ServerName abimanyu.b17.com
-	ServerAlias www.abimanyu.b17.com
-	
-	a2ensite abimanyu.b17.com
-	service apache2 restart
-	mkdir /var/www/abimanyu.b17
-	nano /var/www/abimanyu.b17/index.php
-	
-	<?php
-	    echo "Abimanyu adalah kota di One Piece...";
-	?>
+## Nomor 13
+###### Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
 
-### Jawaban
+#### Penyelesaian
+Lakukan hal yang sama dengan nomor 11 tetapi dengan penamaan file `/etc/apache2/sites-available/parikesit.abimanyu.b17.com.conf` menjadi
 
-## Soal 12
-Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
+![soal13.1](images/13.1.png)
 
-#### Konfigurasi
-	<VirtualHost *:80>
-	        ServerAdmin webmaster@localhost
-	        DocumentRoot /var/www/abimanyu.b19
-	        ServerName abimanyu.b19.com
-	        ServerAlias www.abimanyu.b19.com
-	
-	        Alias "/home" "/var/www/abimanyu.b19/index.php"
-	
-	        ErrorLog ${APACHE_LOG_DIR}/error.log
-	        CustomLog ${APACHE_LOG_DIR}/access.log combined
-	</VirtualHost>
+Lalu untuk mengetes apakah berhasil lakukan `lynx parikesit.abimanyu.b17.com` dari client dan memiliki tampilan sebagai berikut
+![soal13.2](images/13.2.png)
 
-#### Jawaban
+## Nomor 14
+###### Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden)
 
-## Soal 13
-Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
+#### Penyelesaian
+Lakukan konfigurasi pada file `/etc/apache2/sites-available/parikesit.abimanyu.b17.com.conf` menjadi
+![soal14.1](images/14.1.png)
 
-#### Konfigurasi
-	<VirtualHost *:80>
-	   DocumentRoot /var/www/parikesit.abimanyu.b19
-	   ServerName parikesit.abimanyu.b19.com
-	   ServerAlias www.parikesit.abimanyu.b19.com
-	</VirtualHost>
+Lalu untuk mengetes apakah berhasil lakukan `lynx parikesit.abimanyu.b17.com/public` dari client dan memiliki tampilan sebagai berikut
+![soal14.2](images/14.3.png)
+Lalu untuk mengetes apakah berhasil lakukan `lynx parikesit.abimanyu.b17.com/secret` dari client dan memiliki tampilan sebagai berikut
+![soal14.3](images/14.2.png)
 
-#### Jawaban
+## Nomor 15
+###### Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
 
-## Soal 14
-Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
-### Jawaban
+#### Penyelesaian
+Buat file `.htaccess` pada directory `/var/www/parikesit.abimanyu.b17` dan tuliskan 
+```
+ RewriteEngine On
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteRule ^([^\.]+)$ $1.php [NC,L]
+ RewriteRule ^.abimanyu.\.(jpg|jpeg|png|gif)$ /abimanyu.png [L,R=301]
+ ErrorDocument 404 /error/404.html
+ ErrorDocument 403 /error/403.html
+```
+![soal15.1](images/15.1.png)
+Lakukan konfigurasi pada file `/etc/apache2/sites-available/parikesit.abimanyu.b17.com.conf` menjadi
+![soal15.2](images/15.2.png)
+Lalu untuk mengetes apakah berhasil lakukan `lynx parikesit.abimanyu.b17.com/teguh` dari client karena tidak ada dan memiliki tampilan sebagai berikut
+![soal15.3](images/15.3.png)
+Lalu untuk mengetes apakah berhasil lakukan `lynx parikesit.abimanyu.b17.com/secret` dari client karena tidak ada dan memiliki tampilan sebagai berikut
+![soal15.4](images/15.4.png)
 
-## Soal 15
-Buatlah kustomisasi halaman error pada folder /error untuk mengganti error kode pada Apache. Error kode yang perlu diganti adalah 404 Not Found dan 403 Forbidden.
-### Jawaban
+## Nomor 16
+###### Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi www.parikesit.abimanyu.yyy.com/js 
 
-## Soal 16
-Buatlah suatu konfigurasi virtual host agar file asset www.parikesit.abimanyu.yyy.com/public/js menjadi 
-www.parikesit.abimanyu.yyy.com/js 
-### Jawaban
 
-## Soal 17
-Agar aman, buatlah konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
-### Jawaban
+#### Penyelesaian
+Lakukan konfigurasi pada file `/etc/apache2/sites-available/parikesit.abimanyu.b17.com.conf` dengan menambahkan 
+```
+Alias "/js" "/var/www/parikesit.abimanyu.b17/public/js"
+```
+sehingga menjadi 
+![soal16.1](images/16.1.png)
+Lalu untuk mengetes apakah berhasil lakukan `lynx parikesit.abimanyu.b17.com/js` dari client karena tidak ada dan memiliki tampilan sebagai berikut
+![soal16.2](images/16.2.png)
 
-## Soal 18
-Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
-### Jawaban
+## Nomor 17
+###### Agar aman, buatlah konfigurasi agar www.rjp.baratayuda.abimanyu.yyy.com hanya dapat diakses melalui port 14000 dan 14400.
 
-## Soal 19
-Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
-### Jawaban
 
-## Soal 20
-Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
+#### Penyelesaian
+Buat file konfigurasi seperti soal nomor 11 dan lakukan konfigurasi pada file `/etc/apache2/sites-available/rjp.baratayuda.abimanyu.b17.com.conf` sebagai berikut
+![soal17.1](images/17.1.png)
+lalu edit konfigurasi pada file `/etc/apache2/ports.conf` dengan menambahkan
+```
+Listen 14000
+Listen 14400
+```
+Agar port yang dilisten port `14000` dan `14400`
+![soal17.2](images/17.2.png)
+
+Lalu untuk mengetes apakah berhasil lakukan `lynx rjp.baratayuda.abimanyu.b17.com:14000` atau `lynx rjp.baratayuda.abimanyu.b17.com:14400` dari client karena tidak ada dan memiliki tampilan sebagai berikut
+![soal17.3](images/17.3.png)
+
+## Nomor 18
+###### Untuk mengaksesnya buatlah autentikasi username berupa “Wayang” dan password “baratayudayyy” dengan yyy merupakan kode kelompok. Letakkan DocumentRoot pada /var/www/rjp.baratayuda.abimanyu.yyy.
+
+
+#### Penyelesaian
+Buat file konfigurasi `.htpasswd` pada directory `/var/www/rjp.baratayuda.abimanyu.b17` dengan command
+```
+htpasswd -c .htpasswd Wayang baratayudab17
+```
+lalu edit file konfigurasi pada `/etc/apache2/sites-available/rjp.baratayuda.abimanyu.b17.com.conf` menjadi 
+![soal18.1](images/18.1.png)
+dengan menambahkan 
+```
+<Directory /var/www/rjp.baratayuda.abimanyu.b17>
+        AuthType Basic
+        AuthName "Autentikasi dulu dong"
+        AuthUserFile /var/www/rjp.baratayuda.abimanyu.b17/.htpasswd
+        Require user Wayang
+</Directory>
+```
+
+Lalu untuk mengetes apakah berhasil lakukan `lynx -auth=Wayang:baratayudab17 rjp.baratayuda.abimanyu.b17.com:14000` karena memerlukan autorisasi untuk login dan memiliki tampilan sebagai berikut
+![soal18.2](images/18.2.png)
+
+## Nomor 19
+###### Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihkan ke www.abimanyu.yyy.com (alias)
+
+
+#### Penyelesaian
+Lakukan konfigurasi pada file `/etc/apache2/sites-available/abimanyu.b17.com.conf` dengan manambahkan di paling bawah 
+```
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/abimanyu.b17
+        ServerName 10.17.3.3
+        ServerAlias 10.17.3.3
+        Redirect permanent / http://www.abimanyu.b17.com/
+</VirtualHost>
+```
+sehingga menjadi 
+![soal19.1](images/19.1.png)
+Lalu untuk mengetes apakah berhasil lakukan `lynx 10.17.3.3` dan memiliki tampilan sebagai berikut
+![soal19.2](images/19.3.png)
+![soal19.2](images/19.2.png)
+
+## Nomor 20
+###### Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
+
+
+#### Penyelesaian
+Lakukan konfigurasi `.htaccess` pada directory `/var/www/parikesit.abimanyu.b17` dengan menambahkan 
+```
+RewriteRule ^.abimanyu.\.(jpg|jpeg|png|gif)$ /abimanyu.png [L,R=301]
+```
+sehingga menjadi 
+
+![soal20.1](images/20.1.png)
 
 #### Konfigurasi
 	<VirtualHost *:80>
