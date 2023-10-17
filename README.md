@@ -2,7 +2,7 @@
 
 Nama Anggota
 1. Abdullah Nasih Jasir (5025211111)
-2. Yohanes Teguh Ukur Ginting
+2. Yohanes Teguh Ukur Ginting (5025211179)
 
 ## Soal 1
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut
@@ -435,6 +435,33 @@ Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan 
 
 ## Soal 11
 Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
+
+#### Konfigurasi
+*Di Node Abimanyu*
+
+	apt-get install apache2 -y
+	service apache2 start
+
+	cp /etc/apache2/sites-available/000-default.conf  /etc/apache2/sites-available/abimanyu.b17.com.conf
+
+	nano /etc/apache2/sites-available/abimanyu.b17.com.conf
+
+	((Ubah ke))
+	/var/www/abimanyu.b17
+	
+	((Dibawahnya tambahkan))
+	ServerName abimanyu.b17.com
+	ServerAlias www.abimanyu.b17.com
+	
+	a2ensite abimanyu.b17.com
+	service apache2 restart
+	mkdir /var/www/abimanyu.b17
+	nano /var/www/abimanyu.b17/index.php
+	
+	<?php
+	    echo "Abimanyu adalah kota di One Piece...";
+	?>
+
 ### Jawaban
 
 ## Soal 12
@@ -472,4 +499,26 @@ Buatlah agar setiap kali mengakses IP dari Abimanyu akan secara otomatis dialihk
 
 ## Soal 20
 Karena website www.parikesit.abimanyu.yyy.com semakin banyak pengunjung dan banyak gambar gambar random, maka ubahlah request gambar yang memiliki substring “abimanyu” akan diarahkan menuju abimanyu.png.
-### Jawaban
+
+#### Konfigurasi
+	<VirtualHost *:80>
+	   DocumentRoot /var/www/parikesit.abimanyu.b19
+	   ServerName parikesit.abimanyu.b19.com
+	   ServerAlias www.parikesit.abimanyu.b19.com
+	
+	        <Directory /var/www/parikesit.abimanyu.b19/public>
+	                Options +Indexes
+	         </Directory>
+	         <Directory /var/www/parikesit.abimanyu.b19/secret>
+	                Require all denied
+	         </Directory>
+	
+	    Alias "/js" "/var/www/parikesit.abimanyu.b19/public/js"
+	    ErrorDocument 404 /error/404.html
+	    ErrorDocument 403 /error/403.html
+	
+	        RewriteEngine On
+	        RewriteCond %{REQUEST_URI} abimanyu
+	        RewriteRule ^.abimanyu.\.(jpg|jpeg|png|gif)$ /public/images/abimanyu.$
+	</VirtualHost>
+#### Jawaban
