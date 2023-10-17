@@ -459,6 +459,7 @@ Kemudian gunakan algoritma Round Robin untuk Load Balancer pada Arjuna. Gunakan 
 ![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban10.3.png)
 
 ---
+---
 
 ## Nomor 11
 ###### Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
@@ -629,18 +630,18 @@ sehingga menjadi
 
 #### Konfigurasi
 	<VirtualHost *:80>
-	   DocumentRoot /var/www/parikesit.abimanyu.b19
-	   ServerName parikesit.abimanyu.b19.com
-	   ServerAlias www.parikesit.abimanyu.b19.com
+	   DocumentRoot /var/www/parikesit.abimanyu.b17
+	   ServerName parikesit.abimanyu.b17.com
+	   ServerAlias www.parikesit.abimanyu.b17.com
 	
-	        <Directory /var/www/parikesit.abimanyu.b19/public>
+	        <Directory /var/www/parikesit.abimanyu.b17/public>
 	                Options +Indexes
 	         </Directory>
-	         <Directory /var/www/parikesit.abimanyu.b19/secret>
+	         <Directory /var/www/parikesit.abimanyu.b17/secret>
 	                Require all denied
 	         </Directory>
 	
-	    Alias "/js" "/var/www/parikesit.abimanyu.b19/public/js"
+	    Alias "/js" "/var/www/parikesit.abimanyu.b17/public/js"
 	    ErrorDocument 404 /error/404.html
 	    ErrorDocument 403 /error/403.html
 	
@@ -648,4 +649,3 @@ sehingga menjadi
 	        RewriteCond %{REQUEST_URI} abimanyu
 	        RewriteRule ^.abimanyu.\.(jpg|jpeg|png|gif)$ /public/images/abimanyu.$
 	</VirtualHost>
-#### Jawaban
