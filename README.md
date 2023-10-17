@@ -466,11 +466,33 @@ Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abim
 
 ## Soal 12
 Setelah itu ubahlah agar url www.abimanyu.yyy.com/index.php/home menjadi www.abimanyu.yyy.com/home.
-### Jawaban
+
+#### Konfigurasi
+	<VirtualHost *:80>
+	        ServerAdmin webmaster@localhost
+	        DocumentRoot /var/www/abimanyu.b19
+	        ServerName abimanyu.b19.com
+	        ServerAlias www.abimanyu.b19.com
+	
+	        Alias "/home" "/var/www/abimanyu.b19/index.php"
+	
+	        ErrorLog ${APACHE_LOG_DIR}/error.log
+	        CustomLog ${APACHE_LOG_DIR}/access.log combined
+	</VirtualHost>
+
+#### Jawaban
 
 ## Soal 13
 Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
-### Jawaban
+
+#### Konfigurasi
+	<VirtualHost *:80>
+	   DocumentRoot /var/www/parikesit.abimanyu.b19
+	   ServerName parikesit.abimanyu.b19.com
+	   ServerAlias www.parikesit.abimanyu.b19.com
+	</VirtualHost>
+
+#### Jawaban
 
 ## Soal 14
 Pada subdomain tersebut folder /public hanya dapat melakukan directory listing sedangkan pada folder /secret tidak dapat diakses (403 Forbidden).
