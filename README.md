@@ -29,7 +29,8 @@ Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjun
 		netmask 255.255.255.0
 
 #### Jawaban
-![Screenshot (220)]()
+![Screenshot (220)](https://github.com/njabdullah/Jarkom-Modul-2-B17-2023/blob/main/Dokumentasi/Jawaban1.png)
+
 ---
 ## Soal 2
 Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
