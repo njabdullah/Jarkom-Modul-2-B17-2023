@@ -1,9 +1,9 @@
 # Jarkom-Modul-2-B17-2023
-
+---
 Nama Anggota
 1. Abdullah Nasih Jasir (5025211111)
 2. Yohanes Teguh Ukur Ginting (5025211179)
-
+---
 ## Soal 1
 Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjuna merupakan Load Balancer yang terdiri dari beberapa Web Server yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Buatlah topologi dengan pembagian sebagai berikut. Folder topologi dapat diakses pada drive berikut
 
@@ -29,7 +29,8 @@ Yudhistira akan digunakan sebagai DNS Master, Werkudara sebagai DNS Slave, Arjun
 		netmask 255.255.255.0
 
 #### Jawaban
-
+![Screenshot (220)]()
+---
 ## Soal 2
 Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan alias www.arjuna.yyy.com dengan yyy merupakan kode kelompok.
 
@@ -65,7 +66,7 @@ Buatlah website utama pada node arjuna dengan akses ke arjuna.yyy.com dengan ali
     ping www.arjuna.b17.com
 
 #### Jawaban
-
+---
 ## Soal 3
 Dengan cara yang sama seperti soal nomor 2, buatlah website utama dengan akses ke abimanyu.yyy.com dan alias www.abimanyu.yyy.com.
 
